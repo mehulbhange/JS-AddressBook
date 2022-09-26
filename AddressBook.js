@@ -1,3 +1,9 @@
+let nameRegex = RegExp("^[A-Z][Aa-zZ]{2,}$");
+let addressRegex = RegExp("^[A-Za-z0-9,/]{4,}$");
+let cityStateRegex = RegExp("^[A-Za-z]{4,}$");
+let zipRegex = RegExp("^[1-9]{1}[0-9]{2}[\\s]?[0-9]{3}$");
+let phoneNumberRegex = RegExp("^[1-9]{1}[0-9]{9}$");
+let emailRegex = RegExp("[\\w+_-]+(?:\\.[\\w_-]+)*@(?:[\\w]+\\.){1,2}[a-zA-Z]{2,}");
 
 class Contact {
     firstName;
@@ -9,14 +15,38 @@ class Contact {
     phoneNumber;
     email;
     constructor(...params) {
-        this.firstName = params[0];
-        this.lastName = params[1];
-        this.address = params[2];
-        this.city = params[3];
-        this.state = params[4];
-        this.zip = params[5];
-        this.phoneNumber = params[6];
-        this.email = params[7];
+        if (nameRegex.test(params[0]))
+            this.firstName = params[0];
+        else 
+            throw "Invalid First Name!!";
+        if (nameRegex.test(params[1]))
+            this.lastName = params[1];
+        else 
+            throw "Invalid Last Name!!";
+        if (addressRegex.test(params[2]))
+            this.address = params[2];
+        else 
+            throw "Invalid Address!!"; 
+        if (cityStateRegex.test(params[3]))
+            this.city = params[3];
+        else 
+            throw "Invalid City!!";
+        if (cityStateRegex.test(params[4]))
+            this.state = params[4];
+        else 
+            throw "Invalid State!!";
+        if (zipRegex.test(params[5]))
+            this.zip = params[5];
+        else 
+            throw "Invalid Zip!!";
+        if (phoneNumberRegex.test(params[6]))
+            this.phoneNumber = params[6];
+        else 
+            throw "Invalid Phone Number!!";
+        if (emailRegex.test(params[7]))
+            this.email = params[7];
+        else 
+            throw "Invalid Email!!";
     }
 
     toString() {
@@ -24,5 +54,9 @@ class Contact {
     }
 }
 
-let contact = new Contact("Mehul","Bhange","Pune","Pune","Maharashtra",123456,9898989898,"mehul@gmail.com");
-console.log(contact)
+try{
+    let contact = new Contact("Mehul","Bhange","Pune","Pune","Maharashtra",123456,9898989898,"mehul@gmail.com");
+    console.log(contact)
+}catch(ex){
+    console.log(ex);
+}
