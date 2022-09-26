@@ -1,3 +1,5 @@
+const prompt = require('prompt-sync')();
+
 let nameRegex = RegExp("^[A-Z][Aa-zZ]{2,}$");
 let addressRegex = RegExp("^[A-Za-z0-9,/]{4,}$");
 let cityStateRegex = RegExp("^[A-Za-z]{4,}$");
@@ -15,38 +17,14 @@ class Contact {
     phoneNumber;
     email;
     constructor(...params) {
-        if (nameRegex.test(params[0]))
-            this.firstName = params[0];
-        else 
-            throw "Invalid First Name!!";
-        if (nameRegex.test(params[1]))
-            this.lastName = params[1];
-        else 
-            throw "Invalid Last Name!!";
-        if (addressRegex.test(params[2]))
-            this.address = params[2];
-        else 
-            throw "Invalid Address!!"; 
-        if (cityStateRegex.test(params[3]))
-            this.city = params[3];
-        else 
-            throw "Invalid City!!";
-        if (cityStateRegex.test(params[4]))
-            this.state = params[4];
-        else 
-            throw "Invalid State!!";
-        if (zipRegex.test(params[5]))
-            this.zip = params[5];
-        else 
-            throw "Invalid Zip!!";
-        if (phoneNumberRegex.test(params[6]))
-            this.phoneNumber = params[6];
-        else 
-            throw "Invalid Phone Number!!";
-        if (emailRegex.test(params[7]))
-            this.email = params[7];
-        else 
-            throw "Invalid Email!!";
+        this.firstName = params[0];
+        this.lastName = params[1];
+        this.address = params[2];
+        this.city = params[3];
+        this.state = params[4];
+        this.zip = params[5];
+        this.phoneNumber = params[6];
+        this.email = params[7];
     }
 
     toString() {
@@ -54,9 +32,64 @@ class Contact {
     }
 }
 
-try{
-    let contact = new Contact("Mehul","Bhange","Pune","Pune","Maharashtra",123456,9898989898,"mehul@gmail.com");
-    console.log(contact)
-}catch(ex){
-    console.log(ex);
+let addressBookArray = new Array();
+
+let getContact = () => {
+    let firstName = prompt("Enter First Name ");
+    if(!nameRegex.test(firstName))
+        throw "Invalid first name";
+    let lastName = prompt("Enter Last Name ");
+    if(!nameRegex.test(lastName))
+        throw "Invalid last name";
+    let address = prompt("Enter Address ");
+    if(!addressRegex.test(address))
+        throw "Invalid Address!!";
+    let city = prompt("Enter City ");
+    if(!cityStateRegex.test(city))
+        throw "Invalid City!!";
+    let state = prompt("Enter State ");
+    if(!cityStateRegex.test(state))
+        throw "Invalid State!!"
+    let zip = prompt("Enter Zip ");
+    if(!zipRegex.test(zip))
+        throw "Invalid Zip!!";
+    let phoneNumber = prompt("Enter Phone Number ");
+    if(!phoneNumberRegex.test(phoneNumber))
+        throw "Invalid Phone number!!"
+    let email = prompt("Enter Email ");
+    if(!emailRegex.test(email))
+        throw "Invalid Email!!";
+    let contact = null;
+
+    try {
+        contact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+    return contact;
+};
+
+let addContact = (contact) => {
+    addressBookArray.push(contact);
+    console.log("Contact Added Successfully!!")
 }
+
+do {
+    console.log("\n0.Exit \n1.Add Contact");
+    choice = Number(prompt("Enter Your Choice "));
+    switch (choice) {
+        case 0: 
+            return;
+        case 1: 
+            try{
+                addContact(getContact());
+            }catch(ex){
+                console.log(ex);
+            }
+            break;
+        default: 
+            console.log("Invalid Choice !!");
+    }
+
+} while (choice != 2)
