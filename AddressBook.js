@@ -86,9 +86,6 @@ let editContact = () => {
         console.log("\n1.First Name \n2.Last name \n3.Address \n4.City \n5.State \n6.Zip \n7.Phone Number \n8.Email \n");
         let ch = Number(prompt("What you want to edit ?"));
         switch(ch){
-            case 0:
-                console.log("Done!!!");
-                break;
             case 1:
                 let firstName = prompt("Enter First Name ");
                 if(!nameRegex.test(firstName))
@@ -144,10 +141,31 @@ let editContact = () => {
     }
 }
 
+let deleteContact = () => {
+    let frstName = prompt("Enter First Name : ");
+    let lstName = prompt("Enter Last Name : ");
+    let index = addressBookArray.findIndex(contact => contact.firstName == frstName && contact.lastName == lstName);
+    if (index == -1)
+        console.log("Could not find the contact!!")
+    else {
+        console.log("Contact deleted successfully!!");
+        return addressBookArray.splice(index, 1);
+
+    }
+}
+
+let viewContacts = () => {
+    addressBookArray.forEach(contact => console.log(contact.toString()));
+}
+
 do {
-    console.log("\n0.Exit \n1.Add Contact \n2.Edit Contact");
+    
+    console.log("\n0.Exit \n1.Add Contact \n2.Edit Contact \n3.Delete Contact \n4.View Contacts");
     choice = Number(prompt("Enter Your Choice "));
     switch (choice) {
+        case 0:
+            console.log("Done!!!");
+            break;
         case 1: 
             try{
                 addContact(getContact());
@@ -161,6 +179,12 @@ do {
             }catch(ex){
                 console.log(ex);
             }
+            break;
+        case 3:
+            deleteContact();
+            break;
+        case 4:
+            viewContacts();
             break;
         default: 
             console.log("Invalid Choice !!");
